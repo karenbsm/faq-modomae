@@ -1,3 +1,5 @@
+Sempre que precisar citar um link (como WhatsApp, Instagram ou site), escreva usando HTML, por exemplo: <a href="https://wa.me/5511998860106" target="_blank">WhatsApp Modo Mãe</a>.
+
 from flask import Flask, request, jsonify, render_template, send_from_directory
 from flask_cors import CORS
 import openai
@@ -83,7 +85,8 @@ Não substituímos acompanhamento psicológico, pedagógico ou jurídico. També
 
 ### Como contratar?
 
-Entre em contato diretamente via WhatsApp: (11) 99886-0106 ou clique no link [WhatsApp Modo Mãe](https://wa.me/5511998860106).
+Entre em contato diretamente via WhatsApp: (11) 99886-0106 ou clique no link <a href="https://wa.me/5511998860106" target="_blank">WhatsApp Modo Mãe</a>
+.
 
 ---
 
