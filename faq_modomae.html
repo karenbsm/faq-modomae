@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Perguntas Frequentes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: #f7f5f2;
+      font-family: 'Inter', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      background: #fff;
+      border-radius: 24px;
+      box-shadow: 0 4px 24px rgba(40, 60, 90, 0.09);
+      padding: 32px 28px 24px 28px;
+      width: 100%;
+      max-width: 520px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+    }
+    .logo {
+      width: 140px;
+      margin-bottom: 12px;
+    }
+    h1 {
+      color: #c17553;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+      letter-spacing: 1px;
+    }
+    .chatbox {
+      min-height: 100px;
+  padding: 20px;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  word-wrap: break-word;
+  white-space: pre-wrap; /* mantém quebras de linha na resposta */
+    }
+    textarea {
+      width: 100%;
+      border-radius: 12px;
+      border: 1.5px solid #e3c7ae;
+      padding: 12px 10px;
+      font-size: 1rem;
+      margin-bottom: 12px;
+      resize: none;
+      font-family: 'Inter', Arial, sans-serif;
+      color: #744c2e;
+      outline: none;
+      transition: border-color .2s;
+      background: #fcf8f3;
+    }
+    textarea:focus {
+      border-color: #c17553;
+      box-shadow: 0 0 0 2px #e7dacd;
+    }
+    button {
+      width: 100%;
+      padding: 13px;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #c17553 65%, #dcb89c 100%);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.07rem;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(193,117,83,0.04);
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #a55c3f 50%, #be9d80 100%);
+    }
+    @media (max-width: 600px) {
+      .container { max-width: 99vw; padding: 18px 4px;}
+      .chatbox { font-size: 0.98rem; }
+      .logo { width: 64px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="static/logo_modo_mae_simples.png" alt="Logo Modo Mãe" class="logo">
+    <h1>Perguntas Frequentes</h1>
+    <div class="chatbox" id="chatbox">Seja bem-vindo! Quais são suas dúvidas?</div>
+    <textarea id="question" rows="2" placeholder="Digite sua pergunta..."></textarea>
+    <button onclick="sendQuestion()">Enviar Pergunta</button>
+  </div>
+  <script>
+    function sendQuestion() {
+      const question = document.getElementById("question").value;
+      if (!question.trim()) return;
+      document.getElementById("chatbox").textContent = "Aguarde... 💬";
+      fetch('http://localhost:5001/api/faq', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pergunta: question })
+      })
+      .then(res => res.json())
+     .then(data => {
+  if (data.resposta) {
+    document.getElementById("chatbox").innerHTML = data.resposta;
+  } else {
+    document.getElementById("chatbox").textContent = data.error || "Erro desconhecido.";
+  }
+});
+
+    }
+    document.getElementById("question")
+      .addEventListener("keyup", function(event) {
+        if (event.key === "Enter") sendQuestion();
+      });
+  </script>
+</body>
+</html>
