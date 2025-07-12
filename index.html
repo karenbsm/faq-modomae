@@ -101,7 +101,7 @@
       const question = document.getElementById("question").value;
       if (!question.trim()) return;
       document.getElementById("chatbox").textContent = "Aguarde... 💬";
-      fetch('http://localhost:5001/api/faq', {
+fetch('https://faq-modomae.onrender.com/api/faq', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ pergunta: question })
